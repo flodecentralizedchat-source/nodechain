@@ -22,15 +22,15 @@ router.post("/challenge", async (req, res) => {
     const { walletAddress } = req.body;
     if (!walletAddress) return res.status(400).json({ error: "walletAddress required" });
 
-    // Check minimum ETH balance
-    const { hasMinimum, balance } = await hasMinimumETH(walletAddress);
-    if (!hasMinimum) {
+    // Check minimum ETH balance (skip check in development)
+    const { hasMinimum, balance } = await hasMinimumETH(walletAddress)
+    if (!hasMinimum && process.env.NODE_ENV !== 'development') {
       return res.status(403).json({
-        error: "Insufficient ETH balance",
-        message: "You need at least 0.001 ETH to connect your node.",
+        error: 'Insufficient ETH balance',
+        message: 'You need at least 0.001 ETH to connect your node.',
         balance,
         required: 0.001,
-      });
+      })
     }
 
     const challenge = generateChallenge(walletAddress);
