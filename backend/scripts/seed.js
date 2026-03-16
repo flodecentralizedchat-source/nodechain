@@ -8,8 +8,8 @@ async function seed() {
   await mongoose.connect(process.env.MONGODB_URI);
   console.log("Connected to MongoDB");
 
-  const User   = (await import("../src/models/User.js")).default;
-  const Order  = (await import("../src/models/Order.js")).default;
+  const User = (await import("../src/models/User.js")).default;
+  const Order = (await import("../src/models/Order.js")).default;
   const Income = (await import("../src/models/Income.js")).default;
 
   // Clear existing
@@ -18,7 +18,7 @@ async function seed() {
 
   // Create test user
   const user = await User.create({
-    walletAddress: "0x742d35cc6634c0532925a3b8d4c9b8f1234abcd",
+    walletAddress: "0x693c042992E2270aA97baD30c6644f9058bc4cf4",
     ethBalance: 2.4851,
     usdtBalance: 1240.50,
     totalEarned: 0.3847,
