@@ -11,12 +11,12 @@ import { startAllJobs } from "./jobs/cronJobs.js";
 import { getETHPrice } from "./services/priceService.js";
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
-import walletRouter   from "./routes/wallet.js";
-import incomeRouter   from "./routes/income.js";
+import walletRouter from "./routes/wallet.js";
+import incomeRouter from "./routes/income.js";
 import exchangeRouter from "./routes/exchange.js";
-import miningRouter   from "./routes/mining.js";
+import miningRouter from "./routes/mining.js";
 
-const app  = express();
+const app = express();
 const PORT = process.env.PORT || 4000;
 
 // ─── Security & Middleware ─────────────────────────────────────────────────────
@@ -24,7 +24,8 @@ app.use(helmet());
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL || "http://localhost:3000",
-    "http://localhost:5173", // Vite dev
+    "http://localhost:5173",
+    "https://nodechain-silk.vercel.app",
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -45,10 +46,10 @@ app.get("/health", (req, res) => {
 });
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
-app.use("/api/wallet",   walletRouter);
-app.use("/api/income",   incomeRouter);
+app.use("/api/wallet", walletRouter);
+app.use("/api/income", incomeRouter);
 app.use("/api/exchange", exchangeRouter);
-app.use("/api/mining",   miningRouter);
+app.use("/api/mining", miningRouter);
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((req, res) => {
